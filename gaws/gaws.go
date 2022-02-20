@@ -2,9 +2,14 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"os/exec"
 )
 
 func main() {
-	// Get a greeting message and print it.
-	fmt.Println("yo")
+	out, err := exec.Command("aws", "sts", "get-caller-identity").Output()
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("The date is %s\n", out)
 }
