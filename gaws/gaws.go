@@ -51,4 +51,7 @@ func main() {
 
 	vpc := vpcs.ToVpc(vpcs0)
 	fmt.Printf("%+v\n", vpc.VpcId)
+
+	tags := vpcs.Tags(vpc)
+	fmt.Printf("%+v\n", tags)
 }

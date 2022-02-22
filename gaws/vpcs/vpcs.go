@@ -4,8 +4,14 @@ import (
 	"encoding/json"
 )
 
+type Tag struct {
+	Key   string
+	Value string
+}
+
 type Vpc struct {
 	VpcId string
+	Tags  []Tag
 }
 
 type Vpcs struct {
@@ -20,4 +26,13 @@ func DecodeVpcs(b []byte) Vpcs {
 
 func ToVpc(v Vpcs) Vpc {
 	return v.Vpcs[0]
+}
+
+func Tags(v Vpc) map[string]string {
+	m := make(map[string]string)
+
+	for _, t := range v.Tags {
+		m[t.Key] = t.Value
+	}
+	return m
 }
