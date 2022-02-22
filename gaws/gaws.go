@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"path"
@@ -33,10 +34,26 @@ func readFile(filename string) []byte {
 	// fmt.Print(string(dat))
 }
 
+type Vpc struct {
+	VpcId string
+}
+
+type Vpcs struct {
+	Vpcs []Vpc
+}
+
+func decodeJson(b []byte) {
+	var vpcs Vpcs
+	json.Unmarshal(b, &vpcs)
+	fmt.Printf("%+v\n", vpcs)
+}
+
 func main() {
 	filename := getFilename()
 	fmt.Printf("%s\n", filename)
 
 	contents := readFile(filename)
-	fmt.Printf("%s\n", contents)
+	// fmt.Printf("%s\n", contents)
+
+	decodeJson(contents)
 }
