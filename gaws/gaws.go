@@ -2,14 +2,20 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"os"
-	"os/exec"
 	"path"
 	"path/filepath"
 )
 
-func readFile() string {
+// func callAwsApi() string {
+// 	out, err := exec.Command("aws", "sts", "get-caller-identity").Output()
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+// 	return string(out)
+// }
+
+func getFilename() string {
 	wd, err := os.Getwd()
 	if err != nil {
 		panic(err)
@@ -18,15 +24,19 @@ func readFile() string {
 	return path.Join(parent, "gaws/tests/data/ec2/describe-vpcs.json")
 }
 
-func callAwsApi() string {
-	out, err := exec.Command("aws", "sts", "get-caller-identity").Output()
+func readFile(filename string) []byte {
+	dat, err := os.ReadFile(filename)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
-	return string(out)
+	return dat
+	// fmt.Print(string(dat))
 }
 
 func main() {
-	out := readFile()
-	fmt.Printf("%s\n", out)
+	filename := getFilename()
+	fmt.Printf("%s\n", filename)
+
+	contents := readFile(filename)
+	fmt.Printf("%s\n", contents)
 }
