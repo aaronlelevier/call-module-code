@@ -42,10 +42,10 @@ type Vpcs struct {
 	Vpcs []Vpc
 }
 
-func decodeJson(b []byte) {
+func decodeVpcs(b []byte) Vpcs {
 	var vpcs Vpcs
 	json.Unmarshal(b, &vpcs)
-	fmt.Printf("%+v\n", vpcs)
+	return vpcs
 }
 
 func main() {
@@ -55,5 +55,9 @@ func main() {
 	contents := readFile(filename)
 	// fmt.Printf("%s\n", contents)
 
-	decodeJson(contents)
+	vpcs := decodeVpcs(contents)
+	fmt.Printf("%+v\n", vpcs)
+
+	vpcId := vpcs.Vpcs[0].VpcId
+	fmt.Printf("%+v\n", vpcId)
 }
