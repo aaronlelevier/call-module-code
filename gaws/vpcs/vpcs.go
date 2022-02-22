@@ -1,7 +1,23 @@
 package vpcs
 
-import "fmt"
+import (
+	"encoding/json"
+)
 
-func Hello() {
-	fmt.Printf("vpcs\n")
+type Vpc struct {
+	VpcId string
+}
+
+type Vpcs struct {
+	Vpcs []Vpc
+}
+
+func DecodeVpcs(b []byte) Vpcs {
+	var vpcs Vpcs
+	json.Unmarshal(b, &vpcs)
+	return vpcs
+}
+
+func ToVpc(v Vpcs) Vpc {
+	return v.Vpcs[0]
 }

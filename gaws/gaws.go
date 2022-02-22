@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"os"
 	"path"
@@ -36,26 +35,10 @@ func readFile(filename string) []byte {
 	// fmt.Print(string(dat))
 }
 
-type Vpc struct {
-	VpcId string
-}
-
-type Vpcs struct {
-	Vpcs []Vpc
-}
-
-func decodeVpcs(b []byte) Vpcs {
-	var vpcs Vpcs
-	json.Unmarshal(b, &vpcs)
-	return vpcs
-}
-
 func main() {
 
 	// test payload name
 	name := os.Args[1]
-
-	vpcs.Hello()
 
 	filename := getFilename(name)
 	fmt.Printf("%s\n", filename)
@@ -63,9 +46,9 @@ func main() {
 	contents := readFile(filename)
 	// fmt.Printf("%s\n", contents)
 
-	vpcs := decodeVpcs(contents)
-	fmt.Printf("%+v\n", vpcs)
+	vpcs0 := vpcs.DecodeVpcs(contents)
+	fmt.Printf("%+v\n", vpcs0)
 
-	vpcId := vpcs.Vpcs[0].VpcId
-	fmt.Printf("%+v\n", vpcId)
+	vpc := vpcs.ToVpc(vpcs0)
+	fmt.Printf("%+v\n", vpc.VpcId)
 }
