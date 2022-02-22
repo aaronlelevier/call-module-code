@@ -6,6 +6,8 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+
+	"example.com/gaws/vpcs"
 )
 
 // func callAwsApi() string {
@@ -16,13 +18,13 @@ import (
 // 	return string(out)
 // }
 
-func getFilename() string {
+func getFilename(part string) string {
 	wd, err := os.Getwd()
 	if err != nil {
 		panic(err)
 	}
 	parent := filepath.Dir(wd)
-	return path.Join(parent, "gaws/tests/data/ec2/describe-vpcs.json")
+	return path.Join(parent, "gaws/tests/data/ec2", part)
 }
 
 func readFile(filename string) []byte {
@@ -49,7 +51,13 @@ func decodeVpcs(b []byte) Vpcs {
 }
 
 func main() {
-	filename := getFilename()
+
+	// test payload name
+	name := os.Args[1]
+
+	vpcs.Hello()
+
+	filename := getFilename(name)
 	fmt.Printf("%s\n", filename)
 
 	contents := readFile(filename)
