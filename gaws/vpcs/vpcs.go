@@ -36,3 +36,8 @@ func Tags(v Vpc) map[string]string {
 	}
 	return m
 }
+
+func IsMatch(v Vpc, k string, val string) bool {
+	m := Tags(v)
+	return m[k] == val
+}

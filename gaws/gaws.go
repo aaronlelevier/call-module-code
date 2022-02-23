@@ -39,9 +39,13 @@ func main() {
 
 	// test payload name
 	name := os.Args[1]
+	tagKey := os.Args[2]
+	tagValue := os.Args[3]
 
 	filename := getFilename(name)
 	fmt.Printf("%s\n", filename)
+	fmt.Printf("%s\n", tagKey)
+	fmt.Printf("%s\n", tagValue)
 
 	contents := readFile(filename)
 	// fmt.Printf("%s\n", contents)
@@ -54,4 +58,7 @@ func main() {
 
 	tags := vpcs.Tags(vpc)
 	fmt.Printf("%+v\n", tags)
+
+	isMatch := vpcs.IsMatch(vpc, tagKey, tagValue)
+	fmt.Printf("isMatch: %+v\n", isMatch)
 }
