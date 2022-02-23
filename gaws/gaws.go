@@ -61,4 +61,6 @@ func main() {
 
 	isMatch := vpcs.IsMatch(vpc, tagKey, tagValue)
 	fmt.Printf("isMatch: %+v\n", isMatch)
+
+	vpcs.RegexMatch()
 }
