@@ -2,7 +2,6 @@ package vpcs
 
 import (
 	"encoding/json"
-	"fmt"
 	"regexp"
 )
 
@@ -44,31 +43,21 @@ func IsMatch(v Vpc, k string, val string) bool {
 	return m[k] == val
 }
 
-// awscli
-// aws ec2 describe-vpcs --filters Name=tag:Default,Values=True
-
-// should only find one 1 'vpc and return it's 'id'
-// ${vpc Name=tag:Default,Values=True VpcId}
-
-func RegexMatch() {
-	// "p([a-z]+)ch"
-
-	// s := "${vpc (.*?)}"
-	// s := `([a-z]+)\sName=([A-Za-z/:]+),`
-	s := `(?P<name>[a-z]+)\sName=(?P<fName>[A-Za-z\:]+),Values=(?P<fValues>[A-Za-z]+)\s(?P<rKey>[A-Za-z]+)`
-
-	t := "${vpc Name=tag:Default,Values=True VpcId}"
-
+// Decodes a lookup string and returns a map with these keys:
+//
+// - HName: handler name
+// - FName: filter name
+// - FValue: filter value
+// - RKey: return key
+func RegexMatch(t string) map[string]string {
+	s := `(?P<HName>[a-z]+)\sName=(?P<FName>[A-Za-z\:]+),Values=(?P<FValue>[A-Za-z\-0-9]+)\s(?P<RKey>[A-Za-z]+)`
 	r, _ := regexp.Compile(s)
-	fmt.Printf("is match: %+v\n", r.MatchString(t))
-	fmt.Println(r.FindString(t))
-
 	match := r.FindStringSubmatch(t)
-	result := make(map[string]string)
+	m := make(map[string]string)
 	for i, name := range r.SubexpNames() {
 		if i != 0 && name != "" {
-			result[name] = match[i]
+			m[name] = match[i]
 		}
 	}
-	fmt.Printf("%s\n", result)
+	return m
 }

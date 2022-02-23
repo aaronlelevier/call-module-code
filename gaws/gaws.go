@@ -62,5 +62,7 @@ func main() {
 	isMatch := vpcs.IsMatch(vpc, tagKey, tagValue)
 	fmt.Printf("isMatch: %+v\n", isMatch)
 
-	vpcs.RegexMatch()
+	t := "${vpc Name=tag:Default,Values=True VpcId}"
+	m := vpcs.RegexMatch(t)
+	fmt.Printf("%s\n", m)
 }
